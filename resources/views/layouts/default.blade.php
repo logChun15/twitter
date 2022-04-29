@@ -10,8 +10,8 @@
 
     <div class="container">
       <div class="offset-md-1 col-md-10">
+        @include('shared._messages')
         @yield('content')
-        <hr>
         @include('layouts._footer')
       </div>
     </div>
