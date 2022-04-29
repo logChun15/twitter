@@ -18,8 +18,9 @@ class SessionsController extends Controller
             'email' => 'required|email|max:225',
             'password' => 'required'
         ]);
-
-        if (Auth::attempt($credentials)) {
+        //attempt第一个方法会接收一个数组来作为第一个参数，该参数提供的值将用于寻找数据库中的用户数据。先对第一个参数进行匹配，如果有再对第二个参数进行校对，都匹配正确返回true。
+        
+        if (Auth::attempt($credentials,$request->has('remember'))) {
             // 登录成功后的相关操作
             session()->flash('success', '欢迎回来！');
             return redirect()->route('users.show', [Auth::user()]);
