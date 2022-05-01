@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -51,5 +52,13 @@ class User extends Authenticatable
         // 4. 用 strtolower 方法将邮箱转换为小写；
         // 5. 将小写的邮箱使用 md5 方法进行转码；
         // 6. 将转码后的邮箱与链接、尺寸拼接成完整的 URL 并返回；
+    }
+    // boot 方法会在用户模型类完成初始化之后进行加载，因此我们对事件的监听需要放在该方法中。
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function ($user){
+            $user->activation_token = Str::random(30);
+        }) ;
     }
 }

@@ -32,6 +32,7 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'created_at' => $this->faker->dateTimeBetween('-2 year'),
             'updated_at' =>$this->faker->datetimeBetween('-2 year'),
+            'activated' => true,
         ];
     }
 
