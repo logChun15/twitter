@@ -1,19 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Status;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-class Status extends Model
+class StatusFactory extends Factory
 {
-    use HasFactory;
-
-    public function user() 
-    {
-        return $this->belongTo(User::class);
-    }
-
     protected $model = Status::class;
 
     public function definition()
