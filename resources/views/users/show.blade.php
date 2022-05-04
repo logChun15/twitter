@@ -8,6 +8,9 @@
                 <section class="user_info">
                     @include('shared._user_info', ['user' => $user])
                 </section class='status'>
+                <section class="stats mt-2">
+                    @include('shared._stats', ['user' => $user])
+                </section>
                 @if ($statuses->count() > 0)
                 <ul class='list-unstyled'>
                     @foreach ($statuses as $status)
@@ -19,9 +22,6 @@
                 </div>
                 @endif
                 {{-- <p>没有数据 </p> --}}
-                <section>
-
-                </section>
             </div>
         </div>
     </div>
