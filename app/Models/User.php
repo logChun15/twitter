@@ -77,4 +77,37 @@ class User extends Authenticatable
     return $this->statuses()
     ->orderBy('created_at', 'desc');
     }
+    // 在 Laravel 中会默认将两个关联模型的名称进行合并，并按照字母排序，因此我们生成的关联关系表名称
+    // 会是 user_user 。我们也可以自定义生成的名称，把关联表名改为 followers 。
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
+    }
+
+    public function followings()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
+    }
+    // belongsToMany 方法的第三个参数 user_id 是定义在关联中的模型外键名，而第四个参数follower_id 则是要合并的模型外键名。
+
+    public function follow($user_ids)
+    {
+        if ( ! is_array($user_ids)) {
+            $user_ids = compact('user_ids');
+        }
+        $this->followings()->sync($user_ids,false);
+    }
+
+    public function unfollow($user_ids)
+    {
+        if ( ! is_array($user_ids) ) {
+            $user_ids = compact('user_ids');
+        }
+        $this -> followings()->datach($user_ids);
+    }
+
+    public function isFollowing($user_id)
+    {
+        return $this->followings->contain($user_id);
+    }
 }
