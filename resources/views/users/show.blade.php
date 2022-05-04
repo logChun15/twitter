@@ -18,7 +18,7 @@
                     {!! $statuses->render() !!}
                 </div>
                 @endif
-                <p>没有数据 </p>
+                {{-- <p>没有数据 </p> --}}
                 <section>
 
                 </section>

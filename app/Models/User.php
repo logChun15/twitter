@@ -66,4 +66,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Status::class); //需要注意的一点是，由于一个用户拥有多条微博，因此在用户模型中我们使用了微博动态的复数形式statuses\来作为定义的函数名。
     }
+
+    // public function feed()
+    // {
+    // return $this->statuses()
+    //             ->orderBy('created_at', 'desc');
+    // }
+    public function feed()
+    {
+    return $this->statuses()
+    ->orderBy('created_at', 'desc');
+    }
 }
