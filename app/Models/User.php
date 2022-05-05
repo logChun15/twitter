@@ -72,10 +72,15 @@ class User extends Authenticatable
     // return $this->statuses()
     //             ->orderBy('created_at', 'desc');
     // }
-    public function feed()
+    public function feed() //动态流显示关注的人的动态
     {
-    return $this->statuses()
-    ->orderBy('created_at', 'desc');
+    $user_ids = $this->followings->pluck('id')->toArray(); // 通过 followings 方法取出所有关注用户的信息，再借助 pluck 方法将 id 进行分离并赋值给 user_ids ；
+
+    array_push($user_ids, $this->id); //. 将当前用户的 id 加入到 user_ids 数组中；
+    return Status::whereIn('user_id', $user_ids) //使用 Laravel 提供的 whereIn 方法取出所有用户的微博动态并进行倒序排序；
+                    ->with('user') //我们使用了 Eloquent 关联的 with 方法，预加载避免了 N+1 查找的问题 ，大大提高了查询效率。 N+1 问题 的例子可以阅读此文档 。
+
+                    ->orderBy('created_at', 'desc');
     }
     // 在 Laravel 中会默认将两个关联模型的名称进行合并，并按照字母排序，因此我们生成的关联关系表名称
     // 会是 user_user 。我们也可以自定义生成的名称，把关联表名改为 followers 。
